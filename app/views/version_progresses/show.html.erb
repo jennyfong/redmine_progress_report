@@ -7,19 +7,31 @@
 
 <h2>Progress Report</h2>
 
-<% form_tag version_progress_url(@version), :method => :get, :id => "progress_report_form" do %>
-    <label>Project:</label>
-    <%= select_tag :project_id, options_from_collection_for_select(@projects, :id, :name, @project.id) %>
-    <label>Version:</label>
-    <%= select_tag :version_id, options_from_collection_for_select(@versions, :id, :name, @version.id) %>
-    <label>Estimated Dev Days:</label>
-    <%= text_field_tag :estimated_dev_days, params[:estimated_dev_days] %>
-    <label>Period:</label>
-    <%= select_tag :period, options_for_select([['From a date till now', 'from_date'], ['Between two dates', 'between'],['All', 'all']], params[:period]) %>
+<% form_tag version_progress_url(@version), :method => :get, :id => "progress_report_form", :class => "new_issue" do %>
+    <div class="box tabular">
+      <p>
+        <label>Project:</label>
+        <%= select_tag :project_id, options_from_collection_for_select(@projects, :id, :name, @project.id) %>
+      </p>
+
+      <p>
+        <label>Version:</label>
+        <%= select_tag :version_id, options_from_collection_for_select(@versions, :id, :name, @version.id) %>
+      </p>
+
+      <p>
+
+        <label>Estimated Dev Days:</label>
+        <%= text_field_tag :estimated_dev_days, params[:estimated_dev_days] %>
+      </p>
+
+      <p>
+        <label>Period:</label>
+        <%= select_tag :period, options_for_select([['From a date till now', 'from_date'], ['Between two dates', 'between'], ['All', 'all']], params[:period]) %>
 
 
 
-    <span id="date_range_wrapper" style="display:none">
+        <span id="date_range_wrapper" style="display:none">
         <span id="from_date_wrapper">
         <%= text_field_tag :from_date, params[:from_date], :size => 10 %><%= calendar_for('from_date') %>
         </span>
@@ -28,11 +40,16 @@
           to
           <%= text_field_tag :to_date, params[:to_date], :size => 10 %><%= calendar_for('to_date') %>
         </span>
-    </span>
-    <%= submit_tag "Preview" %>
-    <%= submit_tag "Export to CSV" %>
+        </span>
+      </p>
 
+      <label></label>
+      <p>
+        <%= submit_tag "Preview" %>
+        <%= submit_tag "Export to CSV" %>
+      </p>
 
+    </div>
 <% end %>
 
 <br/>
@@ -49,7 +66,7 @@
   <tbody>
   <% @version_progresses.each do |progress| %>
       <tr>
-        <td><%= display_date(progress.created_at)%></td>
+        <td><%= display_date(progress.created_at) %></td>
         <td>
           <%= progress_bar progress.percentage_done, :width => '80px', :legend => "#{display_percentage_done(progress.percentage_done)}%" %>
         </td>
