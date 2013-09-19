@@ -8,7 +8,7 @@ namespace :progress_report do
       version_progress = VersionProgress.create(:spent_hours => version.spent_hours, :percentage_done => version.completed_pourcent, :version => version)
 
     else
-      Version.all.each do |version|
+      Version.all(:conditions => "status = 'open'").each do |version|
         version_progress = VersionProgress.create(:spent_hours => version.spent_hours, :percentage_done => version.completed_pourcent, :version => version)
       end
     end

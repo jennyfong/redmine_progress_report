@@ -30,6 +30,8 @@
         </span>
     </span>
     <%= submit_tag "Apply" %>
+    <%= link_to "Export to CSV", version_progress_url(@version, params.merge(:format => 'csv')), :method => :get, :class => "btn" %>
+
 <% end %>
 
 <br/>
@@ -37,6 +39,7 @@
 <table class="list">
   <thead>
   <tr>
+    <th style="width:1em">Week No.</th>
     <th>Date</th>
     <th>% Done</th>
     <th>% Dev Days</th>
@@ -46,15 +49,16 @@
   <tbody>
   <% @version_progresses.each do |progress| %>
       <tr>
-        <td><%= progress.created_at.strftime('%Y-%m-%d') %></td>
+        <td><%= progress.created_at.strftime('%U') %></td>
+        <td><%= display_date(progress.created_at)%></td>
         <td>
-          <%= progress_bar progress.percentage_done, :width => '80px', :legend => "#{progress.percentage_done.round}%" %>
+          <%= progress_bar progress.percentage_done, :width => '80px', :legend => "#{display_percentage_done(progress.percentage_done)}%" %>
         </td>
         <td>
           <% p_dev_days = percentage_dev_days(progress.spent_hours, params[:estimated_dev_days]) %>
-          <%= progress_bar p_dev_days, :width => '80px', :legend => "#{p_dev_days.round}%" %>
+          <%= progress_bar p_dev_days, :width => '80px', :legend => "#{display_percentage_done(p_dev_days)}%" %>
         </td>
-        <td><%= (progress.spent_hours/8).round(1) %> (<%= progress.spent_hours.round(1) %> hours)</td>
+        <td><%= display_spent_days(progress.spent_hours) %> (<%= progress.spent_hours.round(1) %> hours)</td>
       </tr>
   <% end %>
   </tbody>
