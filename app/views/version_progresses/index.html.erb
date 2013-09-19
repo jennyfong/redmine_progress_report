@@ -1,0 +1,27 @@
+<h2>Version Progresses</h2>
+
+<table class="list">
+  <thead>
+  <tr>
+    <th>Version</th>
+    <th>Spent Hours</th>
+    <th>Percentage Done</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @versions.each do |version| %>
+      <% progress = VersionProgress.find_by_version_id(version.id, :order => 'created_at desc') %>
+      <% if progress %>
+          <tr>
+            <td><%= link_to version.name, version_progress_path(version) %></td>
+            <td><%= progress.spent_hours %> hours</td>
+            <td>
+              <%= progress_bar progress.percentage_done, :width => '80px', :legend => "#{progress.percentage_done}%" %>
+            </td>
+          </tr>
+      <% end %>
+  <% end %>
+  </tbody>
+</table>
+
+

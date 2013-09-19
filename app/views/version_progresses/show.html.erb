@@ -1,0 +1,56 @@
+<% if params[:id] && params[:estimated_dev_days].blank? %>
+    <h2>Select a period to be shown:</h2>
+    <% form_tag version_progress_url(@version), :method => :get do %>
+        <dl>
+          <dt>Project:</dt>
+          <dd><%= link_to @version.project.name, project_url(@version.project) %></dd>
+          <dt>Version:</dt>
+          <dd><%= link_to @version.name, version_url(@version) %></dd>
+          <dt>Estimate Dev Days:</dt>
+          <dd><%= text_field_tag :estimated_dev_days %></dd>
+          <dt>Period</dt>
+          <dd><%= select_tag :period, options_for_select(['All', 'From a date till now', 'Between']) %></dd>
+        </dl>
+        <%= submit_tag "Go" %>
+    <% end %>
+<% elsif @version_progresses && @version_progresses.size > 0 %>
+    <%= link_to "<< Go to All Projects", version_progresses_url() %><br/>
+    <%= link_to "<< Change Dev Days", version_progress_url(@version) %>
+    <dl>
+      <dt>Project:</dt>
+      <dd><%= link_to @version.project.name, project_url(@version.project) %></dd>
+      <dt>Version</dt>
+      <dd><%= link_to @version.name, version_url(@version) %></dd>
+      <dt>Estimated Dev Days: </dt>
+      <dd><%= params[:estimated_dev_days] %></dd>
+    </dl>
+
+    <table class="list">
+      <thead>
+      <tr>
+        <th>Date</th>
+        <th>% Done</th>
+        <th>% Dev Days</th>
+        <th>Spent Dev Days</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @version_progresses.each do |progress| %>
+          <tr>
+            <td><%= progress.created_at %></td>
+            <td>
+              <%= progress_bar progress.percentage_done, :width => '80px', :legend => "#{progress.percentage_done}%" %>
+            </td>
+            <td><% p_dev_days = percentage_dev_days(progress.spent_hours, params[:estimated_dev_days]) %>
+              <%= progress_bar p_dev_days, :width => '80px', :legend => "#{p_dev_days}%" %>
+            </td>
+            <td><%= progress.spent_hours/8 %> (<%= progress.spent_hours %> hours)</td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+<% else %>
+    You don't have a version selected.
+<% end %>
+

@@ -1,4 +1,5 @@
 require 'redmine'
+require 'dispatcher'
 
 Redmine::Plugin.register :redmine_graph_activities do
   name 'Redmine Progress report plugin'
