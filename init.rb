@@ -1,7 +1,7 @@
 require 'redmine'
-require 'dispatcher'
 
-Redmine::Plugin.register :redmine_graph_activities do
+
+Redmine::Plugin.register :redmine_progress_report do
   name 'Redmine Progress report plugin'
   author '@chingyifong'
   description "Capture progresses of each version"
