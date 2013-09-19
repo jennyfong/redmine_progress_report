@@ -6,4 +6,7 @@ Redmine::Plugin.register :redmine_progress_report do
   author '@chingyifong'
   description "Capture progresses of each version"
   version '0.0.1'
+
+  menu :admin_menu, :progress_report, "/version_progresses", :caption => 'Progress Report'
+
 end

@@ -3,8 +3,8 @@ class VersionProgressesController < ApplicationController
   unloadable
 
   def index
-    @versions = Version.all
-
+    @version = Project.first(:order => 'name asc').versions.last
+    redirect_to version_progress_url(@version)
   end
 
 
