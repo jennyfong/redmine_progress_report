@@ -16,7 +16,22 @@ class VersionProgressesController < ApplicationController
       @project = @version.project
     end
 
-    @version_progresses = VersionProgress.all(:conditions => ["version_id = ? ", @version.id], :order => "created_at desc")
+    @projects = Project.visible.all(:order => 'name asc')
+    @versions = @project.versions(:order => 'name asc')
+
+    from_date = 0
+    to_date =  DateTime.now
+
+    if params[:period] == 'from_date'
+      flash[:warning] = "Please enter the date" if params[:from_date].blank?
+      from_date = params[:from_date]
+    elsif params[:period] == 'between'
+      flash[:warning] = "Please enter the dates" if params[:from_date].blank? || params[:to_date].blank?
+      from_date = params[:from_date]
+      to_date = params[:to_date]
+    end
+
+    @version_progresses = VersionProgress.all(:conditions => ["version_id = ? and created_at > ? and created_at < ?", @version.id, from_date, to_date], :order => "created_at desc")
   end
 
 
