@@ -1,6 +1,9 @@
 class VersionProgressesController < ApplicationController
-  include VersionProgressesHelper
   unloadable
+
+  include VersionProgressesHelper
+
+  before_filter :require_admin
 
   def index
     if params[:project_id]
