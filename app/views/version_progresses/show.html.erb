@@ -27,7 +27,7 @@
 
       <p>
         <label>Period:</label>
-        <%= select_tag :period, options_for_select([['From a date till now', 'from_date'], ['Between two dates', 'between'], ['All', 'all']], params[:period]) %>
+        <%= select_tag :period, options_for_select([ ['All', 'all'], ['From a date till now', 'from_date'], ['Between two dates', 'between']], params[:period]) %>
 
 
 
