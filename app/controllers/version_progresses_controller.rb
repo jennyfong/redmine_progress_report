@@ -4,7 +4,7 @@ class VersionProgressesController < ApplicationController
 
   def index
     if params[:project_id]
-      @version = Project.first(:order => 'name asc').versions.last
+      @version = Project.find(params[:project_id]).versions.last
       redirect_to version_progress_url(@version)
     else
       @projects = Project.visible.all(:order => 'name asc')
