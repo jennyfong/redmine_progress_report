@@ -1,0 +1,1 @@
+* * * * 7 cd /srv/www/your_site_path && RAILS_ENV=production /usr/bin/env rake progress_report:record_progress  >> log/redmine_progress_report.log 2>&1
