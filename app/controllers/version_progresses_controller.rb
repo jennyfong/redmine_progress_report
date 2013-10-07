@@ -6,7 +6,7 @@ class VersionProgressesController < ApplicationController
   before_filter :require_admin
 
   def index
-    if params[:project_id]
+    if params[:project_id] && !params[:project_id].blank?
       @version = Project.find(params[:project_id]).versions.last
       redirect_to version_progress_url(@version)
     else

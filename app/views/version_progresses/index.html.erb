@@ -4,7 +4,7 @@
     <div class="box tabular">
       <p>
         <label>Project:</label>
-        <%= select_tag :project_id, options_for_select(@projects.collect{|project| [project.name, project.id]}.insert(0, ""))  %>
+        <%= select_tag :project_id, "<option value=''></option>" +project_tree_options_for_select(@projects, :include_blank => true)  %>
       </p>
 
     </div>

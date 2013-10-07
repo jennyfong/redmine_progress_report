@@ -4,7 +4,7 @@
     <div class="box tabular">
       <p>
         <label>Project:</label>
-        <%= select_tag :project_id, options_from_collection_for_select(@projects, :id, :name, @project.id) %>
+        <%= select_tag :project_id, project_tree_options_for_select(@projects, :selected => @project) %>
       </p>
 
       <p>
