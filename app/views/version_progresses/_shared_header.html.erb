@@ -1,0 +1,14 @@
+<% content_for :header_tags do %>
+    <%= stylesheet_link_tag("progress_report.css", :plugin => "redmine_progress_report", :media => "screen") %>
+    <%= javascript_include_tag('//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js') %>
+    <%= javascript_tag('jQuery.noConflict();') %>
+    <%= javascript_include_tag('progress_report.js', :plugin => 'redmine_progress_report') %>
+<% end %>
+
+
+<div class="contextual">
+  <%= link_to "Update all progresses", record_progress_version_progresses_url, :class => "icon icon-multiple" %>
+</div>
+
+
+<h2>Progress Report</h2>

@@ -4,16 +4,9 @@ namespace :progress_report do
   task :record_progress => :environment do
     if !ENV['VERSION'].blank?
       version = Version.find(ENV['VERSION'])
-
-      version_progress = VersionProgress.create(:spent_hours => version.spent_hours, :percentage_done => version.completed_pourcent, :version => version)
-
+      VersionProgress.record_progress(version)
     else
-      Version.all(:conditions => "status = 'open'").each do |version|
-        version_progress = VersionProgress.create(:week_no => DateTime.now.strftime('%U'),
-                                                  :spent_hours => version.spent_hours,
-                                                  :percentage_done => version.completed_pourcent,
-                                                  :version => version)
-      end
+      VersionProgress.record_progress
     end
   end
 end

@@ -24,7 +24,7 @@ class VersionProgressesController < ApplicationController
     @project ||= @version.project
 
     @projects = Project.visible.all(:order => 'name asc')
-    @versions = @project.versions(:order => 'name asc')
+    @versions = Version.all(:conditions => ["status = 'open' and project_id =?", @project.id], :order => 'name asc')
 
     from_date = 0
     to_date = DateTime.now
@@ -49,6 +49,17 @@ class VersionProgressesController < ApplicationController
 
 
   end
+
+  def record_progress
+    VersionProgress.record_progress
+
+    flash.now[:notice] = "Recorded progresses on all active versions."
+
+    redirect_to version_progresses_url
+
+  end
+
+
 
 
 end

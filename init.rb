@@ -9,6 +9,6 @@ Redmine::Plugin.register :redmine_progress_report do
 
   menu :admin_menu, :progress_report, "/version_progresses", :caption => 'Progress Report', :html => {:class => 'enumerations'}
 
-  permission :progress_report, :report => :index
+  permission :progress_report, :report => [:index, :show, :record_progress]
 
 end
