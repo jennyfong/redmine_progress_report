@@ -9,4 +9,11 @@ namespace :progress_report do
       VersionProgress.record_progress
     end
   end
+
+
+  desc "remove duplicates"
+  task :remove_duplicates => :environment do
+    VersionProgress.clean_duplicates
+  end
+
 end

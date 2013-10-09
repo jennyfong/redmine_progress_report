@@ -16,4 +16,17 @@ class VersionProgress < ActiveRecord::Base
     end
 
   end
+
+  def self.clean_duplicates
+    Version.all(:conditions => "status = 'open'").each do |version|
+      (1..52).each do |week_no|
+        version_progress = VersionProgress.first(:conditions => ["version_id =? and week_no = ?", version.id, week_no])
+        if version_progress
+          VersionProgress.destroy_all(["version_id = ? and week_no =? and id <> ? ", version_progress.version_id, version_progress.week_no, version_progress.id])
+        end
+
+      end
+
+    end
+  end
 end
